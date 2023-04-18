@@ -1,8 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
-import bodyParser from 'body-parser';
-import dotenv from 'dotenv';
-dotenv.config();
+import bodyParser, { json } from 'body-parser';
+import { Config } from './configs/config';
 const botControllerRouter = require('./controllers/botController');
 
 const app = express();
@@ -13,7 +12,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(morgan('combined'));
 
+// Parse application/json. Verify that callback came from Facebook
+// app.use(json({ verify: Utils.verifyRequestSignature }));
+
 app.use(express.static('./public'));
+
+// Set template engine in Express
+// app.set("view engine", "ejs");
 
 // application routes
 app.use('/webhook', botControllerRouter);
@@ -38,8 +43,9 @@ const errorHandler = (
 
 app.use(errorHandler);
 
-const port = process.env.PORT || 8080;
+// Check all Configs
+Config.checkEnvVariables();
 
-app.listen(port, () => {
-    console.log(`App is running at the port ${port}`);
+app.listen(Config.port, () => {
+    console.log(`App is running at the port ${Config.port}`);
 });
