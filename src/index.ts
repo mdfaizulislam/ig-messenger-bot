@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
@@ -17,6 +17,26 @@ app.use(express.static('./public'));
 
 // application routes
 app.use('/webhook', botControllerRouter);
+
+app.all('*', function (req, res) {
+    throw new Error('Bad request');
+});
+
+// default error handler
+const errorHandler = (
+    err: Error,
+    req: Request,
+    res: Response,
+    next: Function
+) => {
+    console.log('something went wrong');
+    if (res.headersSent) {
+        return next(err);
+    }
+    res.status(500).json({ error: err });
+};
+
+app.use(errorHandler);
 
 const port = process.env.PORT || 8080;
 
