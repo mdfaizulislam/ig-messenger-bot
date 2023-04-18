@@ -1,23 +1,24 @@
-import express from "express";
+import express from 'express';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
-const dotenv = require('dotenv');
+import dotenv from 'dotenv';
 dotenv.config();
-const botController = require("./controllers/botController");
+const botControllerRouter = require('./controllers/botController');
 
-let app = express();
+const app = express();
 
 //use body-parser to post data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(morgan('combined'))
 
-app.use(express.static('./public'))
+app.use(morgan('combined'));
+
+app.use(express.static('./public'));
 
 // application routes
-app.use("/webhook", botController);
+app.use('/webhook', botControllerRouter);
 
-let port = process.env.PORT || 8080;
+const port = process.env.PORT || 8080;
 
 app.listen(port, () => {
     console.log(`App is running at the port ${port}`);
