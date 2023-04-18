@@ -15,7 +15,6 @@
     },
     "env": {
         "browser": true,
-        "node": true,
-        "es2016": true
+        "node": true
     }
 }
