@@ -1,5 +1,6 @@
 import express from "express";
-import bodyParser = require("body-parser");
+import morgan from 'morgan';
+import bodyParser from 'body-parser';
 const dotenv = require('dotenv');
 dotenv.config();
 const botController = require("./controllers/botController");
@@ -9,6 +10,7 @@ let app = express();
 //use body-parser to post data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(morgan('combined'))
 
 app.use(express.static('./public'))
 
