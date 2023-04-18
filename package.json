@@ -6,7 +6,7 @@
   "scripts": {
     "dev_build": "npx tsc -w",
     "dev_start": "nodemon start built/index.js",
-    "build": "tsc",
+    "build": "npx tsc",
     "start": "node ./built/index.js"
   },
   "author": "Faizul",
