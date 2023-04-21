@@ -7,4 +7,4 @@ facebook messenger bot using node.js
     npm install; npm run build
 
 2.  Start command
-    npm run build
+    npm run start
